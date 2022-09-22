@@ -20,11 +20,20 @@ public class aprendiendoWeb extends MainActivity {
         WebView myWebView = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
-        Bundle bundle=new Bundle();
-        bundle.putString("mensaje","Hola mundo.");
-        myWebView.addJavascriptInterface(bundle,"bundle");
-        myWebView.loadUrl("myURL/interfase.php?mensaje="+bundle.getString("mensaje"));
-        //alerta("String myWebView: ",null,0,this);
+        
+        BundleJs bundle_js=new BundleJs();
+        myWebView.addJavascriptInterface(bundle_js, "bundle_js");
+        String url="https://aprendoconpazyamor.org/neae/view/prueba_script.html";
+        String respuesta_bundle=bundle_js.getData(myWebView,url);
+        
+    }
+    
+    class BundleJs {
+        @JavascriptInterface
+        public String getData(WebView wv,String url)
+        {
+            wv.loadUrl(url);
+            return "WebPage in WebView has been readed!";
+        }
     }
 }
